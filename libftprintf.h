@@ -6,7 +6,7 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 12:01:47 by femaury           #+#    #+#             */
-/*   Updated: 2018/04/30 17:12:24 by femaury          ###   ########.fr       */
+/*   Updated: 2018/04/30 19:04:00 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct	s_list
 
 t_list			*ft_lstnew(void const *content, size_t content_size);
 void			ft_lstadd(t_list **alst, t_list *new);
-void			ft_lstrev(t_list **alst);
+int				ft_lstrev(t_list **alst);
 void			ft_putlst(t_list *lst);
 void			ft_lstdel(t_list **alst);
 void			ft_memdel(void **ap);

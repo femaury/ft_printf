@@ -6,7 +6,7 @@
 #    By: femaury <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/18 20:03:09 by femaury           #+#    #+#              #
-#    Updated: 2018/04/30 17:12:44 by femaury          ###   ########.fr        #
+#    Updated: 2018/04/30 17:15:37 by femaury          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@$(CC) $(CFLAGS) -c $^
 
 test: $(NAME)
-	$(CC) ft_printf.c $^
+	$(CC) $(CFLAGS) ft_printf.c $^
 
 clean:
 	@$(RM) $(OBJ)

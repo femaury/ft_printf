@@ -6,7 +6,7 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 12:01:47 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/03 17:06:27 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/03 18:40:52 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ typedef struct	s_format
 {
 	unsigned int	flags: 5;
 	unsigned int	lflags: 6;
+	unsigned int	width;
+	unsigned int	precision;
+	unsigned char	type;
 }				t_format;
 
 typedef enum	e_flags

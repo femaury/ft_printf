@@ -6,7 +6,7 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 18:12:12 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/03 17:06:24 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/03 18:40:48 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,18 @@ static void	ft_parsing_lenflags(const char * restrict format,
 		fstring.lflags |= LF_IMAX;
 	else if (format[i[0]] == 'z')
 		fstring.lflags |= LF_SIZE;
+	i[0]++;
 }
 
 static void	ft_parsing_digits(const char * restrict format, t_format fstring,
 		int i[2])
 {
-	while (ft_isdigit(format[i[0]]) || format[i[0]] == '.')
-	{
-
-	}
+	if (ft_isdigit(format[i[0]]))
+		fstring.width = ft_atoi(format[i[0]]);
+	while (ft_isdigit(format[i[0]]) && format[i[0]] != '.')
+		i[0]++;
+	if (format[i[0]] == '.')
+		fstring.precision = ft_atoi(format[++i[0]]);
 }
 
 void		ft_parsing(const char * restrict format, char *buff, va_list args, int i[2])
@@ -68,20 +71,8 @@ void		ft_parsing(const char * restrict format, char *buff, va_list args, int i[2
 	t_format	fstring;
 
 	ft_parsing_flags(format, fstring, i);
+	ft_parsing_digits(format, fstring, i);
 	ft_parsing_lenflags(format, fstring, i);
-	while (format[i[0]])
-	{
-		if (ft_isdigit(format[i[0]]))
-		{
-		}
-		else if (format[i[0]] == '.')
-		{
-		}
-		else if (EQU_TYPES(format[i[0]]))
-		{
-		}
-		else
-			exit (1);
-		i[0]++;
-	}
+	fstring.type = format[i[0]++];
+	ft_get_arg(buff, args, fstring, i);
 }

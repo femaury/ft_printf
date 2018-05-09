@@ -6,16 +6,26 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 12:01:47 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/03 18:40:52 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/09 21:11:34 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFTPRINTF_H
 # define LIBFTPRINTF_H
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdarg.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdarg.h>
+
+#include <stdio.h>
+
+# define JOIN_STR(a, b) {\
+	tofree = buff;\
+	buff = ft_strnjoin(buff, format - a, (size_t)b);\
+	ft_strdel(&tofree);\
+}
+
+# define IF_I2 i[2] == 0 ? 0 : 1 - i[2]
 
 typedef struct	s_format
 {
@@ -45,6 +55,10 @@ typedef enum	e_lengthflags
 	LF_SIZE = 1 << 5,
 }				t_lflags;
 
+char			*ft_parsing(const char * restrict format, char *buff, va_list args,
+		int i[4]);
+char			*ft_get_arg(char *buff, va_list args, t_format fstring);
+
 size_t			ft_strlen(const char *s);
 void			ft_strdel(char **ap);
 void			*ft_memmove(void *dst, const void *src, size_t len);
@@ -52,5 +66,7 @@ void			*ft_memcpy(void *dst, const void *src, size_t n);
 void			ft_putstr(char const *s);
 char			*ft_strnew(size_t size);
 char			*ft_strnjoin(char const *s1, char const *s2, size_t len);
+int				ft_atoi(const char *str);
+int				ft_isdigit(int c);
 
 #endif

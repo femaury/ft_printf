@@ -6,14 +6,14 @@
 #    By: femaury <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/18 20:03:09 by femaury           #+#    #+#              #
-#    Updated: 2018/05/03 14:41:16 by femaury          ###   ########.fr        #
+#    Updated: 2018/05/09 21:18:15 by femaury          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 SRC_PATH = .
 SRC_NAME = ft_strnew.c ft_strdel.c ft_strlen.c ft_strnjoin.c ft_putstr.c \
-		   ft_memcpy.c ft_memmove.c
+		   ft_memcpy.c ft_memmove.c ft_atoi.c ft_isdigit.c
 OBJ_PATH = .
 OBJ_NAME = $(SRC_NAME:.c=.o)
 SRC = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
@@ -28,13 +28,13 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@ar rc $@ $^
 	@ranlib $@
-	@$(RM) $(OBJ)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@$(CC) $(CFLAGS) -c $^
 
 test: $(NAME)
-	$(CC) $(CFLAGS) ft_printf.c $^
+	$(CC) $(CFLAGS) ft_printf.c ft_parsing.c ft_get_arg.c $^
+	@$(RM) $(OBJ)
 
 clean:
 	@$(RM) $(OBJ)

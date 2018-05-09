@@ -6,73 +6,101 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 18:12:12 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/03 18:40:48 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/09 21:15:17 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
 #define EQU_FLAGS(c) c == '-' || c == '+' || c == ' ' || c == '0' || c == '#'
-#define EQU_LENFLAGS(c) c == 'h' || c == 'l' || c == 'j' || c == 'z'
-#define EQU_TYPES(c) c == 's' || c == 'S' || c == 'p' || c == 'd' || c == 'D' || \
-c == 'i' || c == 'o' || c == 'O' || c == 'u' || c == 'U' || c == 'x' || \
-c == 'X' || c == 'c' || c == 'C'
+#define EQU_LFLAGS(c) c == 'h' || c == 'l' || c == 'j' || c == 'z'
 
 static void	ft_parsing_flags(const char * restrict format, t_format fstring,
-		int i[2])
+		int i[4])
 {
-	while (EQU_FLAGS(format[i[0]]))
+	while (EQU_FLAGS(*format))
 	{
-		else if (format[i[0]] == ' ')
+		if (*format == ' ')
 			fstring.flags |= F_SPACE;
-		else if (format[i[0]] == '#')
+		else if (*format == '#')
 			fstring.flags |= F_HASH;
-		else if (format[i[0]] == '+')
+		else if (*format == '+')
 			fstring.flags |= F_PLUS;
-		else if (format[i[0]] == '-')
+		else if (*format == '-')
 			fstring.flags |= F_MINUS;
-		else if (format[i[0]] == '0')
+		else if (*format == '0')
 			fstring.flags |= F_ZERO;
-		i[0]++;
+		i[2]++;
+		format++;
 	}
 }
 
-static void	ft_parsing_lenflags(const char * restrict format,
-		t_format fstring, int i[2])
+static void	ft_parsing_lenflags(const char * restrict format, t_format fstring,
+		int i[4])
 {
-	if (format[i[0]] == 'h' && format[i[0] + 1] == 'h')
-		fstring.lflags |= LF_CTOI;
-	else if (format[i[0]] == 'h')
-		fstring.lflags |= LF_SHTOI;
-	else if (format[i[0]] == 'l' && format[i[0] + 1] == 'l')
-		fstring.lflags |= LF_LLONG;
-	else if (format[i[0]] == 'l')
-		fstring.lflags |= LF_LONG;
-	else if (format[i[0]] == 'j')
-		fstring.lflags |= LF_IMAX;
-	else if (format[i[0]] == 'z')
-		fstring.lflags |= LF_SIZE;
-	i[0]++;
+	if (EQU_LFLAGS(*format))
+	{
+		if (*format == 'h' && *(format + 1) == 'h')
+		{
+			i[2]++;
+			format++;
+			fstring.lflags |= LF_CTOI;
+		}
+		else if (*format == 'h')
+			fstring.lflags |= LF_SHTOI;
+		else if (*format == 'l' && *(format + 1) == 'l')
+		{
+			i[2]++;
+			format++;
+			fstring.lflags |= LF_LLONG;
+		}
+		else if (*format == 'l')
+			fstring.lflags |= LF_LONG;
+		else if (*format == 'j')
+			fstring.lflags |= LF_IMAX;
+		else if (*format == 'z')
+			fstring.lflags |= LF_SIZE;
+		format++;
+		i[2]++;
+	}
 }
 
 static void	ft_parsing_digits(const char * restrict format, t_format fstring,
-		int i[2])
+		int i[4])
 {
-	if (ft_isdigit(format[i[0]]))
-		fstring.width = ft_atoi(format[i[0]]);
-	while (ft_isdigit(format[i[0]]) && format[i[0]] != '.')
-		i[0]++;
-	if (format[i[0]] == '.')
-		fstring.precision = ft_atoi(format[++i[0]]);
+	if (ft_isdigit(*format))
+		fstring.width = ft_atoi(format);
+	while (ft_isdigit(*format))
+	{
+		i[2]++;
+		format++;
+	}
+	if (*format == '.')
+	{
+		fstring.precision = ft_atoi(format + 1);
+		format++;
+		i[2]++;
+	}
+	while (ft_isdigit(*format))
+	{
+		i[2]++;
+		format++;
+	}
 }
 
-void		ft_parsing(const char * restrict format, char *buff, va_list args, int i[2])
+char		*ft_parsing(const char * restrict format, char *buff, va_list args, int i[4])
 {
 	t_format	fstring;
 
+	fstring.flags = 0;
+	fstring.lflags = 0;
+	fstring.width = 0;
+	fstring.precision = 0;
+	fstring.type = 0;
 	ft_parsing_flags(format, fstring, i);
 	ft_parsing_digits(format, fstring, i);
 	ft_parsing_lenflags(format, fstring, i);
-	fstring.type = format[i[0]++];
-	ft_get_arg(buff, args, fstring, i);
+	fstring.type = *format;
+	i[2]++;
+	return (ft_get_arg(buff, args, fstring));
 }

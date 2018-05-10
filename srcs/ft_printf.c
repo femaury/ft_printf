@@ -6,7 +6,7 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 12:00:35 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/10 15:11:19 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/10 22:37:49 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static char	*ft_readformat(const char * restrict format, char *buff,
 				format += i[3] - 1;
 				i[2] += i[3];
 			}
-//			printf("\n---- AFTER PARSING ----\n\nformat: %s\nbuff: %s\ni[0]: %d\ni[1]: %d\ni[2]: %d\ni[3]: %d\n-----------------------\n", format, buff, i[0], i[1], i[2], i[3]);
+			printf("\n---- AFTER PARSING ----\n\nformat: %s\nbuff: %s\ni[0]: %d\ni[1]: %d\ni[2]: %d\ni[3]: %d\n-----------------------\n", format, buff, i[0], i[1], i[2], i[3]);
 			if (*(format) == '%')
 				i[2]++;
 			i[1] = i[0] + i[2];

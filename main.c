@@ -6,7 +6,7 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/10 12:22:40 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/10 14:47:16 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/10 21:32:07 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int		main(void)
 //	ft_printf("%%\n");
 //	ft_printf("Je test mon printf avec un char: %c", 'c');
 //	ft_printf("\n");
-	res = ft_printf("%s\n", "test");
+	res = ft_printf("le big test%2c avec deux %-6s\n", '1', "types");
 	printf("%d\n", res);
-	res = printf("%s\n", "test");
+	res = printf("le big test%2c avec deux %-6s\n", '1', "types");
 	printf("%d\n", res);
 	return (0);
 }

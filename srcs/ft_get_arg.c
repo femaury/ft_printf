@@ -6,7 +6,7 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/09 14:46:54 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/10 14:46:08 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/10 22:37:44 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,29 @@
 char	*ft_get_c(char *buff, va_list args, t_format fstring)
 {
 	char	c;
+	char	*str;
 	char	*tofree;
 
 	tofree = buff;
-	if (fstring.prec == 0)
-		return (buff);
 	c = (char)va_arg(args, int);
-	buff = ft_strnjoin(buff, &c, 1);
+	if (fstring.width > 1)
+	{
+		if (!(str = (char *)ft_strnew(fstring.width, ' ')))
+			return (NULL);
+		if (!(fstring.flags & F_MINUS))
+			str[fstring.width - 1] = c;
+		else
+			str[0] = c;
+	}
+	else
+	{
+		if (!(str = (char *)malloc(2)))
+			return (NULL);
+		str[0] = c;
+		str[1]= '\0';
+	}
+	buff = ft_strnjoin(buff, str, ft_strlen(str));
+	ft_strdel(&str);
 	ft_strdel(&tofree);
 	return (buff);
 }

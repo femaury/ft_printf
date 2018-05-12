@@ -1,39 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_get_arg2.c                                      :+:      :+:    :+:   */
+/*   ft_fill_buffer.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/11 14:20:21 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/12 17:59:12 by femaury          ###   ########.fr       */
+/*   Created: 2018/05/12 17:45:30 by femaury           #+#    #+#             */
+/*   Updated: 2018/05/12 18:18:47 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-static void	ft_get_d(t_buffer *buff, va_list args, t_format fstring)
+void		ft_fill_buffer(t_buffer *buff, char *str, size_t len)
 {
-	size_t	nblen;
-	char	*nb;
+	unsigned int	i;
 
-	nb = ft_itoa_base(va_arg(args, int), 10);
-	nblen = ft_strlen(nb);
-	if (fstring.hasprec && !fstring.prec)
-		return ;
-	if (buff)
+	i = 0;
+	while (i < len)
 	{
+		if (buff->pos == BUFF_SIZE)
+		{
+			write(1, buff->str, BUFF_SIZE);
+			ft_strnclr(buff->str, BUFF_SIZE);
+			buff->len += buff->pos;
+			buff->pos = 0;
+		}
+		buff->str[buff->pos++] = str[i++];
 	}
-	if (fstring.width > nblen)
-	{
-	}
-	else
-	{
-	}
-}
-
-void		ft_get_arg2(t_buffer *buff, va_list args, t_format fstring)
-{
-	if (fstring.type == 'd')
-		ft_get_d(buff, args, fstring);
 }

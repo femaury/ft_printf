@@ -6,14 +6,14 @@
 #    By: femaury <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/18 20:03:09 by femaury           #+#    #+#              #
-#    Updated: 2018/05/11 16:35:01 by femaury          ###   ########.fr        #
+#    Updated: 2018/05/12 17:59:43 by femaury          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 LIBFT = libft/libft.a
 SRC_PATH = srcs
-SRC_NAME = ft_printf.c ft_parsing.c ft_get_arg.c ft_get_arg2.c
+SRC_NAME = ft_printf.c ft_parsing.c ft_get_arg.c ft_get_arg2.c ft_fill_buffer.c
 OBJ_PATH = obj
 OBJ_NAME = $(SRC_NAME:.c=.o)
 SRC = $(addprefix $(SRC_PATH)/,$(SRC_NAME))

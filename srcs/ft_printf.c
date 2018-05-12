@@ -6,7 +6,7 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 12:00:35 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/11 19:34:58 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/12 18:24:40 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,75 +14,52 @@
 
 /* ---------- LEGEND ---------- */
 /*                              */
-/*   i[0]: pos in format        */
-/*   i[1]: already read chars   */
-/*   i[2]: chars not to print   */
-/*   i[3]: flag chars after %   */
+/*   pos: pos in format         */
+/*   start: already read chars  */
 /*                              */
-/* -----------------------------*/
+/* ---------------------------- */
 
-static char	*ft_join_strings(int i[4], int size, char buff)
+static void	ft_readformat(char *format, t_buffer *buff, va_list args)
 {
-	char	*tofree;
+	int		pos;
+	int		start;
 
-	tofree = buff;
-	buff = ft_strnjoin(buff, format - (i[0] - i[1] - (i[2] ? 1 - i[2] : 0)),
-				(size_t)size);
-	if (buff != tofree)
-		ft_strdel(&tofree);
-	return (buff);
-}
-
-static char	*ft_readformat(const char * restrict format, char *buff,
-		va_list args, int i[4])
-{
-	int		check;
-	char	*tofree;
-
-	while (*format)
+	pos = 0;
+	start = 0;
+	while (format[pos])
 	{
-		if (*format == '%')
+		if (format[pos] == '%')
 		{
-			buff = ft_join_strings((i, *(format + 1) == '%'
-							? i[0] - i[1] - (IF_I2) + 1
-							: i[0] - i[1] - (IF_I2)), buff);
-			format++;
-			buff = ft_parsing(format, buff, args, i);
-			format += i[3] ? i[3] - 1 : 0;
-			i[2] += i[3];
-//			printf("\n---- AFTER PARSING ----\n\nformat: %s\nbuff: %s\ni[0]: %d\ni[1]: %d\ni[2]: %d\ni[3]: %d\n-----------------------\n", format, buff, i[0], i[1], i[2], i[3]);
-			if (*(format) == '%')
-				i[2]++;
-			i[1] = i[0] + i[2];
-			check = i[0];
+//			printf("Calling fill with start: %d and pos: %d\n", start, pos);
+			ft_fill_buffer(buff, format + start, pos - start +
+					(format[pos + 1] == '%' ? 1 : 0));
+			pos++;
+			ft_parsing(format, buff, args, &pos);
+//			printf("\n---- AFTER PARSING ----\n\nformat: %s\nbuff: %s\npos: %d\nstart: %d\n-----------------------\n", format, buff->str, pos, start);
+			start = pos;
 		}
-		format++;
-		i[0]++;
+		else
+			pos++;
 	}
-//	printf("\n---- BEFORE LAST JOIN ----\n\nformat: %s\nbuff: %s\ni[0]: %d\ni[1]: %d\ni[2]: %d\ni[3]: %d\ncheck: %d\n-------------------------\n", format, buff, i[0], i[1], i[2], i[3], check);
-	if (check != i[0] - 1)
-		JOIN_STR((i[0] - i[1] - (IF_I2)), (i[0] - i[1] - (IF_I2)))
-	return (buff);
+//	printf("\n---- BEFORE LAST JOIN ----\n\nformat: %s\nbuff: %s\npos: %d\nstart: %d\n-------------------------\n", format, buff->str, pos, start);
+	if (start != pos)
+		ft_fill_buffer(buff, format + start, pos - start);
 }
 
 int			ft_printf(const char * restrict format, ...)
 {
-	va_list	args;
-	char	*buff;
-	int		i[4];
-	int		len;
+	va_list		args;
+	t_buffer	buff;
 
-	i[0] = 0;
-	i[1] = 0;
-	i[2] = 0;
-	i[3] = 0;
-	buff = ft_strnew(0, '\0');
+	ft_strnclr(buff.str, BUFF_SIZE);
+	buff.len = 0;
+	buff.pos = 0;
 	va_start(args, format);
-	buff = ft_readformat(format, buff, args, i);
+	ft_readformat((char *)format, &buff, args);
 	va_end(args);
-	len = ft_strlen(buff);
-	ft_putstr(buff);
-	ft_strdel(&buff);
-	return (len);
+	if (buff.str[0])
+		write(1, buff.str, buff.pos);
+	buff.len += buff.pos;
+	return (buff.len);
 }
 

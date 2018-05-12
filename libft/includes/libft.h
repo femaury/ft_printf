@@ -6,7 +6,7 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 15:07:51 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/10 13:58:37 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/12 17:38:44 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int				ft_strncmp(const char *s1, const char *s2, size_t n);
 
 void			ft_strdel(char **as);
 void			ft_strclr(char *s);
+void			ft_strnclr(char *s, size_t len);
 void			ft_striter(char *s, void (*f)(char *));
 void			ft_striteri(char *s, void (*f)(unsigned int, char *));
 char			**ft_strsplit(char const *s, char c);

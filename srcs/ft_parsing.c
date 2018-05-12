@@ -5,97 +5,78 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/30 18:12:12 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/11 19:27:25 by femaury          ###   ########.fr       */
+/*   Created: 2018/04/20 18:12:12 by femaury           #+#    #+#             */
+/*   Updated: 2018/05/12 18:20:29 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-static const char	*ft_parsing_flags(const char * restrict format,
-		t_format *fstring, int i[4])
+static void	ft_parsing_flags(char *format, t_format *fstring, int *pos)
 {
-	while (*format == '-' || *format == '+' || *format == ' ' ||
-			*format == '0' || *format == '#')
+	while (format[*pos] == '-' || format[*pos] == '+' || format[*pos] == ' ' ||
+			format[*pos] == '0' || format[*pos] == '#')
 	{
-		if (*format == ' ')
+		if (format[*pos] == ' ')
 			fstring->flags |= F_SPACE;
-		else if (*format == '#')
+		else if (format[*pos] == '#')
 			fstring->flags |= F_HASH;
-		else if (*format == '+')
+		else if (format[*pos] == '+')
 			fstring->flags |= F_PLUS;
-		else if (*format == '-')
+		else if (format[*pos] == '-')
 			fstring->flags |= F_MINUS;
-		else if (*format == '0')
+		else if (format[*pos] == '0')
 			fstring->flags |= F_ZERO;
-		i[3]++;
-		format++;
+		*pos += 1;
 	}
-	return (format);
 }
 
-static const char	*ft_parsing_lenflags(const char * restrict format,
-		t_format *fstring, int i[4])
+static void	ft_parsing_lenflags(char *format, t_format *fstring, int *pos)
 {
-	if (*format != 'h' && *format != 'l' && *format != 'j' && *format != 'z')
-		return (format);
-	if (*format == 'h' && *(format + 1) == 'h')
+	if (format[*pos] == 'h' && format[*pos + 1] == 'h')
 	{
-		i[3]++;
-		format++;
+		*pos += 1;
 		fstring->lflags |= LF_CTOI;
 	}
-	else if (*format == 'h')
+	else if (format[*pos] == 'h')
 		fstring->lflags |= LF_SHTOI;
-	else if (*format == 'l' && *(format + 1) == 'l')
+	else if (format[*pos] == 'l' && format[*pos + 1] == 'l')
 	{
-		i[3]++;
-		format++;
+		*pos += 1;
 		fstring->lflags |= LF_LLONG;
 	}
-	else if (*format == 'l')
+	else if (format[*pos] == 'l')
 		fstring->lflags |= LF_LONG;
-	else if (*format == 'j')
+	else if (format[*pos] == 'j')
 		fstring->lflags |= LF_IMAX;
-	else if (*format == 'z')
+	else if (format[*pos] == 'z')
 		fstring->lflags |= LF_SIZE;
-	format++;
-	i[3]++;
-	return (format);
+	if (format[*pos] == 'h' || format[*pos] == 'l' || format[*pos] == 'j' ||
+			format[*pos] == 'z')
+		*pos += 1;
 }
 
-static const char	*ft_parsing_digits(const char * restrict format,
-		t_format *fstring, int i[4])
+static void	ft_parsing_digits(char *format, t_format *fstring, int *pos)
 {
-	if (ft_isdigit(*format))
-		fstring->width = ft_atoi(format);
-	while (ft_isdigit(*format))
+	if (ft_isdigit(format[*pos]))
+		fstring->width = ft_atoi(format + *pos);
+	while (ft_isdigit(format[*pos]))
+		*pos += 1;
+	if (format[*pos] == '.')
 	{
-		i[3]++;
-		format++;
-	}
-	if (*format == '.')
-	{
+		*pos += 1;
 		fstring->hasprec = 1;
-		fstring->prec = ft_atoi(format + 1);
-		format++;
-		i[3]++;
+		fstring->prec = ft_atoi(format + *pos);
 	}
-	while (ft_isdigit(*format))
-	{
-		i[3]++;
-		format++;
-	}
-	return (format);
+	while (ft_isdigit(format[*pos]))
+		*pos += 1;
 }
 
-char				*ft_parsing(const char * restrict format, char *buff,
-		va_list args, int i[4])
+void		ft_parsing(char *format, t_buffer *buff, va_list args, int *pos)
 {
 	t_format	fstring;
 
-	i[3] = 0;
-	if (*format && *format != '%')
+	if (format[*pos] && format[*pos] != '%')
 	{
 		fstring.flags = 0;
 		fstring.lflags = 0;
@@ -103,12 +84,13 @@ char				*ft_parsing(const char * restrict format, char *buff,
 		fstring.hasprec = 0;
 		fstring.prec = 0;
 		fstring.type = 0;
-		format = ft_parsing_flags(format, &fstring, i);
-		format = ft_parsing_digits(format, &fstring, i);
-		format = ft_parsing_lenflags(format, &fstring, i);
-		fstring.type = *format;
-		i[3]++;
-		return (ft_get_arg(buff, args, fstring));
+		ft_parsing_flags(format, &fstring, pos);
+		ft_parsing_digits(format, &fstring, pos);
+		ft_parsing_lenflags(format, &fstring, pos);
+		fstring.type = format[*pos];
+		*pos += 1;
+		ft_get_arg(buff, args, fstring);
 	}
-	return (buff);
+	else if (format[*pos] == '%')
+		*pos += 1;
 }

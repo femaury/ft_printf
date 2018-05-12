@@ -6,7 +6,7 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 12:01:47 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/11 20:04:19 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/12 17:55:57 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,9 @@
 # include <stdlib.h>
 # include <stdarg.h>
 
-#include <stdio.h>
+# include <stdio.h>
 
-# define JOIN_STR(a, b) {\
-	tofree = buff;\
-	buff = ft_strnjoin(buff, format - a, (size_t)b);\
-	if (buff != tofree)\
-		ft_strdel(&tofree);\
-}
-
-# define IF_I2 i[2] == 0 ? 0 : 1 - i[2]
-
-#define BUFF_SIZE 64
+# define BUFF_SIZE 64
 
 typedef struct	s_format
 {
@@ -40,17 +31,11 @@ typedef struct	s_format
 	unsigned char	type;
 }				t_format;
 
-typedef struct	s_padding
-{
-	unsigned int	zeroes;
-	unsigned int	spaces;
-}				t_padding;
-
 typedef struct	s_buffer
 {
-	char	buff[BUFF_SIZE];
-	size_t	len;
-	int		pos;
+	char			str[BUFF_SIZE];
+	unsigned int	len;
+	unsigned int	pos;
 }				t_buffer;
 
 typedef enum	e_flags
@@ -73,15 +58,17 @@ typedef enum	e_lengthflags
 }				t_lflags;
 
 int				ft_printf(const char * restrict format, ...);
-char			*ft_parsing(const char * restrict format, char *buff, va_list args, int i[4]);
-char			*ft_get_arg(char *buff, va_list args, t_format fstring);
-char			*ft_get_arg2(char *buff, va_list args, t_format fstring);
+void			ft_parsing(char *format, t_buffer *buff, va_list args, int *pos);
+void			ft_get_arg(t_buffer *buff, va_list args, t_format fstring);
+void			ft_get_arg2(t_buffer *buff, va_list args, t_format fstring);
+void			ft_fill_buffer(t_buffer *buff, char *str, size_t len);
 
 size_t			ft_strlen(const char *s);
 void			ft_strdel(char **ap);
 void			*ft_memmove(void *dst, const void *src, size_t len);
 void			*ft_memcpy(void *dst, const void *src, size_t n);
 void			ft_putstr(char const *s);
+void			ft_strnclr(char *s, size_t len);
 char			*ft_strnew(size_t size, unsigned char c);
 char			*ft_strnjoin(char const *s1, char const *s2, size_t len);
 char			*ft_strncpy(char *dst, const char *src, size_t len);

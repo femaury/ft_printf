@@ -6,7 +6,7 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 12:01:47 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/12 21:16:01 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/13 17:47:26 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,11 @@
 # include <stdio.h>
 
 # define BUFF_SIZE 64
-# define FLAGS fstring.flags
-# define LFLAGS fstring.lflags
+# define FLAGS fstr.flags
+# define LFLAGS fstr.lflags
+# define WIDTH fstr.width
+# define PREC fstr.prec
+# define TYPE fstr.type
 
 typedef struct	s_format
 {
@@ -62,6 +65,7 @@ typedef enum	e_lengthflags
 int				ft_printf(const char * restrict format, ...);
 void			ft_parsing(char *format, t_buffer *buff, va_list args, int *pos);
 void			ft_get_arg(t_buffer *buff, va_list args, t_format fstring);
+void			ft_get_str(t_buffer *buff, va_list args, t_format fstring);
 void			ft_get_int(t_buffer *buff, va_list args, t_format fstring,
 		int base);
 void			ft_fill_buffer(t_buffer *buff, char *str, size_t len);

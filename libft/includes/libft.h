@@ -6,7 +6,7 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 15:07:51 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/12 20:20:28 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/14 13:27:54 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void			ft_setupcase(char *s);
 void			ft_setlowcase(char *s);
 char			*ft_itoa(int n);
 char			*ft_itoa_base(int n, int base);
-char			*ft_uitoa_base(unsigned int n, int base);
+char			*ft_imaxtoa_base(intmax_t n, int base);
+char			*ft_uimaxtoa_base(uintmax_t n, int base);
 int				ft_atoi(const char *str);
 int				ft_sqrt(int nb);
 int				ft_isalpha(int c);

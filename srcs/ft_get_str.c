@@ -6,7 +6,7 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 17:41:19 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/13 17:48:37 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/14 14:05:14 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@ static void	ft_get_c(t_buffer *buff, va_list args, t_format fstr)
 	{
 		if (FLAGS & F_MINUS)
 		{
-			ft_fill_buffer(buff, &c, 1);
+			ft_pad_buffer(buff, c, 1);
 			ft_pad_buffer(buff, ' ', WIDTH - 1);
 		}
 		else
 		{
 			ft_pad_buffer(buff, ' ', WIDTH - 1);
-			ft_fill_buffer(buff, &c, 1);
+			ft_pad_buffer(buff, c, 1);
 		}
 	}
 	else
-		ft_fill_buffer(buff, &c, 1);
+		ft_pad_buffer(buff, c, 1);
 }
 
 static void	ft_get_s(t_buffer *buff, va_list args, t_format fstr)
@@ -39,10 +39,11 @@ static void	ft_get_s(t_buffer *buff, va_list args, t_format fstr)
 	size_t	strlen;
 	char	*str;
 
-	if (fstr.hasprec && !PREC)
+	if (fstr.hasprec && !PREC && !WIDTH)
 		return ;
 	str = va_arg(args, char *);
 	strlen = ft_strlen(str);
+	strlen = (fstr.hasprec && PREC < strlen ? PREC : strlen);
 	if (WIDTH > strlen)
 	{
 		if (FLAGS & F_MINUS)

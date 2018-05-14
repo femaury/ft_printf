@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_uitoa_base.c                                    :+:      :+:    :+:   */
+/*   ft_imaxtoa_base.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/21 14:09:39 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/12 20:03:40 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/14 13:29:02 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static long	ft_power(long n, int power)
+static int	ft_power(int n, int power)
 {
 	if (power < 0)
 		return (0);
@@ -21,23 +21,29 @@ static long	ft_power(long n, int power)
 	return (n * ft_power(n, power - 1));
 }
 
-char		*ft_uitoa_base(unsigned int n, int base)
+char		*ft_imaxtoa_base(intmax_t n, int base)
 {
-	int		ilen;
-	char	*str;
-	long	nb;
+	int			ilen;
+	int			sign;
+	char		*str;
+	intmax_t	nb;
 
-	nb = (long)n;
 	if (base < 2 || base > 16)
 		return (NULL);
+	sign = 0;
+	nb = (n < 0 ? -n : n);
 	ilen = 1;
-	while (nb > ft_power((long)base, ilen) - 1)
+	if (n < 0)
+		sign = 1;
+	while (nb > (intmax_t)(ft_power(base, ilen) - 1))
 		ilen++;
-	if (!(str = (char *)ft_memalloc(ilen + 1)))
+	if (!(str = (char *)ft_memalloc(ilen + sign + 1)))
 		return (NULL);
+	if (sign)
+		str[0] = '-';
 	while (ilen--)
 	{
-		str[ilen] = (nb % base) + (nb % base > 9 ? '7' : '0');
+		str[ilen + sign] = (nb % base) + (nb % base > 9 ? '7' : '0');
 		nb /= base;
 	}
 	return (str);

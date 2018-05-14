@@ -6,7 +6,7 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 14:20:21 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/13 17:48:20 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/14 14:14:19 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static int	ft_set_extra(char *nb, t_format fstr)
 	}
 	return (0);
 }
-
 
 static void	ft_prepend(t_buffer *buff, char *nb, size_t len, t_format fstr)
 {
@@ -72,8 +71,7 @@ static void	ft_extend2(t_buffer *buff, char *nb, size_t len, t_format fstr)
 	}
 }
 
-
-static void ft_extend(t_buffer *buff, char *nb, size_t len, t_format fstr)
+static void	ft_extend(t_buffer *buff, char *nb, size_t len, t_format fstr)
 {
 	int		extra;
 
@@ -98,25 +96,16 @@ static void ft_extend(t_buffer *buff, char *nb, size_t len, t_format fstr)
 	}
 }
 
-void		ft_get_int(t_buffer *buff, va_list args, t_format fstr, int base)
+void		ft_get_int(t_buffer *buff, char *nb, t_format fstr)
 {
-	char	*nb;
-
-	if (TYPE == 'd' || TYPE == 'i' || TYPE == 'D')
-		nb = ft_itoa_base(va_arg(args, int), base);
-	else if (TYPE == 'p')
+	if (TYPE == 'p')
 	{
 		FLAGS |= F_HASH;
-		nb = ft_itoa_base((unsigned int)va_arg(args, void *), base);
 		ft_setlowcase(nb);
 	}
-	else
-	{
-		nb = ft_uitoa_base(va_arg(args, unsigned int), base);
-		if (ft_islower(TYPE))
-			ft_setlowcase(nb);
-	}
+	else if (TYPE == 'x')
+		ft_setlowcase(nb);
 	WIDTH = (PREC > WIDTH ? PREC : WIDTH);
-	ft_extend(buff, nb, ft_strlen(nb), fstr); 
+	ft_extend(buff, nb, ft_strlen(nb), fstr);
 	ft_strdel(&nb);
 }

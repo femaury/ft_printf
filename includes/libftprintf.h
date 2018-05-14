@@ -6,7 +6,7 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 12:01:47 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/13 17:47:26 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/14 14:49:18 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 # include <stdio.h>
 
-# define BUFF_SIZE 64
+# define BUFF_SIZE 32
 # define FLAGS fstr.flags
 # define LFLAGS fstr.lflags
 # define WIDTH fstr.width
@@ -62,27 +62,22 @@ typedef enum	e_lengthflags
 	LF_SIZE = 1 << 5,
 }				t_lflags;
 
-int				ft_printf(const char * restrict format, ...);
-void			ft_parsing(char *format, t_buffer *buff, va_list args, int *pos);
+int				ft_printf(const char *restrict format, ...);
+void			ft_parsing(char *format, t_buffer *buff, va_list args,
+		int *pos);
 void			ft_get_arg(t_buffer *buff, va_list args, t_format fstring);
 void			ft_get_str(t_buffer *buff, va_list args, t_format fstring);
-void			ft_get_int(t_buffer *buff, va_list args, t_format fstring,
-		int base);
+void			ft_get_int(t_buffer *buff, char *nb, t_format fstring);
 void			ft_fill_buffer(t_buffer *buff, char *str, size_t len);
 void			ft_pad_buffer(t_buffer *buff, char pad, size_t len);
 
 size_t			ft_strlen(const char *s);
 void			ft_strdel(char **ap);
-void			*ft_memmove(void *dst, const void *src, size_t len);
-void			*ft_memcpy(void *dst, const void *src, size_t n);
 void			ft_putstr(char const *s);
 void			ft_strnclr(char *s, size_t len);
 void			ft_setlowcase(char *s);
-char			*ft_strnew(size_t size, unsigned char c);
-char			*ft_strnjoin(char const *s1, char const *s2, size_t len);
-char			*ft_strncpy(char *dst, const char *src, size_t len);
-char			*ft_itoa_base(int n, int base);
-char			*ft_uitoa_base(unsigned int n, int base);
+char			*ft_imaxtoa_base(uintmax_t n, int base);
+char			*ft_uimaxtoa_base(uintmax_t n, int base);
 int				ft_atoi(const char *str);
 int				ft_isdigit(int c);
 int				ft_islower(int c);

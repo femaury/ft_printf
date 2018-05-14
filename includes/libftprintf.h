@@ -6,7 +6,7 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 12:01:47 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/14 14:49:18 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/14 16:18:27 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void			ft_get_arg(t_buffer *buff, va_list args, t_format fstring);
 void			ft_get_str(t_buffer *buff, va_list args, t_format fstring);
 void			ft_get_int(t_buffer *buff, char *nb, t_format fstring);
 void			ft_fill_buffer(t_buffer *buff, char *str, size_t len);
-void			ft_pad_buffer(t_buffer *buff, char pad, size_t len);
+void			ft_pad_buffer(t_buffer *buff, char pad, size_t len, int errno);
 
 size_t			ft_strlen(const char *s);
 void			ft_strdel(char **ap);

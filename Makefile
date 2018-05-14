@@ -6,7 +6,7 @@
 #    By: femaury <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/18 20:03:09 by femaury           #+#    #+#              #
-#    Updated: 2018/05/14 14:50:53 by femaury          ###   ########.fr        #
+#    Updated: 2018/05/14 15:57:13 by femaury          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ $(LIB_OBJ_PATH)/%.o: $(LIB_SRC_PATH)/%.c
 	@$(CC) $(CFLAGS) -Ilibft/includes -o $@ -c $<
 
 test: $(NAME)
-	$(CC) $(CFLAGS) -o printf main.c $^
+	$(CC) -Iincludes -o printf main.c $^
 	@$(RM) $(OBJ)
 
 clean:

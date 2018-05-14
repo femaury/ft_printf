@@ -6,7 +6,7 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 17:41:19 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/14 14:05:14 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/14 16:20:24 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@ static void	ft_get_c(t_buffer *buff, va_list args, t_format fstr)
 	{
 		if (FLAGS & F_MINUS)
 		{
-			ft_pad_buffer(buff, c, 1);
-			ft_pad_buffer(buff, ' ', WIDTH - 1);
+			ft_pad_buffer(buff, c, 1, 0);
+			ft_pad_buffer(buff, ' ', WIDTH - 1, 0);
 		}
 		else
 		{
-			ft_pad_buffer(buff, ' ', WIDTH - 1);
-			ft_pad_buffer(buff, c, 1);
+			ft_pad_buffer(buff, ' ', WIDTH - 1, 0);
+			ft_pad_buffer(buff, c, 1, 0);
 		}
 	}
 	else
-		ft_pad_buffer(buff, c, 1);
+		ft_pad_buffer(buff, c, 1, 0);
 }
 
 static void	ft_get_s(t_buffer *buff, va_list args, t_format fstr)
@@ -49,11 +49,11 @@ static void	ft_get_s(t_buffer *buff, va_list args, t_format fstr)
 		if (FLAGS & F_MINUS)
 		{
 			ft_fill_buffer(buff, str, strlen);
-			ft_pad_buffer(buff, ' ', WIDTH - strlen);
+			ft_pad_buffer(buff, ' ', WIDTH - strlen, 0);
 		}
 		else
 		{
-			ft_pad_buffer(buff, ' ', WIDTH - strlen);
+			ft_pad_buffer(buff, ' ', WIDTH - strlen, 0);
 			ft_fill_buffer(buff, str, strlen);
 		}
 	}

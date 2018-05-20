@@ -22,6 +22,7 @@ int		main(void)
 	i = -5;
 	setlocale(LC_ALL, "");
 	test = "hello";
+/*
 	ft_printf("ft_printf -->%+010.5d\n", 24);
 	printf("printf -->>>>%+010.5d\n", 24);
 	ft_printf("ft_printf ->>%d\n", -7);
@@ -170,6 +171,7 @@ int		main(void)
 	printf("printf ->>>>>%010.5d\n", 7);
 	ft_printf("ft_printf ->>%-10.5d\n", -42);
 	printf("printf ->>>>>%-10.5d\n", -42);
+*/
 	ft_printf("ft_printf ->>%+020.5d\n", 1560133635);
 	printf("printf ->>>>>%+020.5d\n", 1560133635);
 	ft_printf("ft_printf ->>%+010.5d\n", -2035065302);
@@ -212,15 +214,15 @@ int		main(void)
 	ft_printf("ft_printf ->>%S\n", L"我是一只猫");
 	printf("printf ->>>>>%S\n", L"我是一只猫");
 	ft_printf("ft_printf ->>%hd\n", 32768);
-	printf("printf ->>%hd\n", 32768);
+	printf("printf ->>>>>%hd\n", 32768);
 	ft_printf("ft_printf ->>%hhd\n", 128);
-	printf("printf ->>%hhd\n", 128);
+	printf("printf ->>>>>%hhd\n", 128);
 	ft_printf("ft_printf ->>%ld\n", -2147483648);
-	printf("printf ->>%ld\n", -2147483648);
+	printf("printf ->>>>>%ld\n", -2147483648);
 	ft_printf("ft_printf ->>%ld\n", 2147483648);
-	printf("printf ->>%ld\n", 2147483648);
+	printf("printf ->>>>>%ld\n", 2147483648);
 	ft_printf("ft_printf ->>%llx\n", 9223372036854775808);
-	printf("printf ->>%llx\n", 9223372036854775808);
+	printf("printf ->>>>>%llx\n", 9223372036854775808);
 	ft_printf("-->@moulitest: %.d<--\n", 0);
 	printf("-->@moulitest: %.d<--\n", 0);
 	ft_printf("ft_printf ->>%c\n", 42);

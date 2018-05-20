@@ -54,19 +54,20 @@ static void	ft_extend2(t_buffer *buff, char *nb, size_t len, t_format fstr)
 	int		extra;
 
 	extra = ft_set_extra(nb, fstr);
-	if ((FLAGS & F_ZERO) || PREC)
+	if ((FLAGS & F_ZERO) || fstr.hasprec)
 	{
-		if (PREC && PREC < WIDTH - extra)
-			ft_pad_buffer(buff, ' ', WIDTH - PREC - extra, 4);
+		if (fstr.hasprec && PREC < WIDTH - extra)
+			ft_pad_buffer(buff, ' ', WIDTH - (PREC > len ? PREC : len) - extra, 3);
 		ft_prepend(buff, nb, len, fstr);
-		ft_pad_buffer(buff, ((FLAGS & F_ZERO) || PREC > len ? '0' : ' '),
-				(PREC > WIDTH - extra ? PREC : WIDTH - PREC) - len -
-				(nb[0] == '-' || (FLAGS & F_ZERO) ? 1 : 0), 3);
+		if (fstr.hasprec)
+			ft_pad_buffer(buff, '0', PREC - (PREC > len ? len : PREC), 4);
+		else
+			ft_pad_buffer(buff, '0', WIDTH - len - extra, 5);
 		ft_fill_buffer(buff, nb + (nb[0] == '-' ? 1 : 0), len);
 	}
 	else
 	{
-		ft_pad_buffer(buff, ' ', WIDTH - len - extra, 2);
+		ft_pad_buffer(buff, ' ', WIDTH - len - extra, 6);
 		ft_prepend(buff, nb, len, fstr);
 		ft_fill_buffer(buff, nb + (nb[0] == '-' ? 1 : 0), len);
 	}
@@ -78,21 +79,22 @@ static void	ft_extend(t_buffer *buff, char *nb, size_t len, t_format fstr)
 
 	len -= (nb[0] == '-' ? 1 : 0);
 	extra = ft_set_extra(nb, fstr);
-	if (WIDTH > len + extra)
+	if (WIDTH > len || PREC > len)
 	{
 		if (FLAGS & F_MINUS)
 		{
 			ft_prepend(buff, nb, len, fstr);
-			if (PREC > len && PREC < WIDTH)
-				ft_pad_buffer(buff, '0', PREC - len, 5);
+			if (PREC > len)
+				ft_pad_buffer(buff, '0', PREC - len, 1);
 			ft_fill_buffer(buff, nb + (nb[0] == '-' ? 1 : 0), len);
-			ft_pad_buffer(buff, ' ', WIDTH - extra - (PREC < len ? PREC : len), 1);
+			ft_pad_buffer(buff, ' ', (WIDTH > PREC ? WIDTH - PREC - extra : 0), 2);
 		}
 		else
 			ft_extend2(buff, nb, len, fstr);
 	}
 	else
 	{
+		printf("test\n");
 		ft_prepend(buff, nb, len, fstr);
 		ft_fill_buffer(buff, nb + (nb[0] == '-' ? 1 : 0), len);
 	}
@@ -107,7 +109,6 @@ void		ft_get_int(t_buffer *buff, char *nb, t_format fstr)
 	}
 	else if (TYPE == 'x')
 		ft_setlowcase(nb);
-	WIDTH = (PREC > WIDTH ? PREC : WIDTH);
 	ft_extend(buff, nb, ft_strlen(nb), fstr);
 	ft_strdel(&nb);
 }

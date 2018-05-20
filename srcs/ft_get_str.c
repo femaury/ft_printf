@@ -42,6 +42,8 @@ static void	ft_get_s(t_buffer *buff, va_list args, t_format fstr)
 	if (fstr.hasprec && !PREC && !WIDTH)
 		return ;
 	str = va_arg(args, char *);
+	if (!str)
+		str = "(null)";
 	strlen = ft_strlen(str);
 	strlen = (fstr.hasprec && PREC < strlen ? PREC : strlen);
 	if (WIDTH > strlen)

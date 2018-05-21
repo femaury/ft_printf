@@ -6,13 +6,13 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/12 17:45:30 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/14 16:05:44 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/21 14:50:42 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-void		ft_fill_buffer(t_buffer *buff, char *str, size_t len)
+void		ftp_fill_buffer(t_buffer *buff, char *str, size_t len)
 {
 	unsigned int	i;
 

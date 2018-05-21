@@ -6,7 +6,7 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/20 18:12:12 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/13 17:47:55 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/21 14:55:05 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	ft_parsing_digits(char *format, t_format *fstr, int *pos)
 		*pos += 1;
 }
 
-void		ft_parsing(char *format, t_buffer *buff, va_list args, int *pos)
+void		ftp_parsing(char *format, t_buffer *buff, va_list args, int *pos)
 {
 	t_format	fstr;
 
@@ -87,9 +87,12 @@ void		ft_parsing(char *format, t_buffer *buff, va_list args, int *pos)
 		ft_parsing_flags(format, &fstr, pos);
 		ft_parsing_digits(format, &fstr, pos);
 		ft_parsing_lenflags(format, &fstr, pos);
-		fstr.type = format[*pos];
-		*pos += 1;
-		ft_get_arg(buff, args, fstr);
+		if (ft_strchr("sSpdDioOuUxXcC%", format[*pos]))
+		{
+			fstr.type = format[*pos];
+			*pos += 1;
+			ftp_get_arg(buff, args, fstr);
+		}
 	}
 	else if (format[*pos] == '%')
 		*pos += 1;

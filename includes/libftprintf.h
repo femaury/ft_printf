@@ -6,7 +6,7 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 12:01:47 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/14 16:18:27 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/21 15:07:37 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,21 +63,23 @@ typedef enum	e_lengthflags
 }				t_lflags;
 
 int				ft_printf(const char *restrict format, ...);
-void			ft_parsing(char *format, t_buffer *buff, va_list args,
+void			ftp_parsing(char *format, t_buffer *buff, va_list args,
 		int *pos);
-void			ft_get_arg(t_buffer *buff, va_list args, t_format fstring);
-void			ft_get_str(t_buffer *buff, va_list args, t_format fstring);
-void			ft_get_int(t_buffer *buff, char *nb, t_format fstring);
-void			ft_fill_buffer(t_buffer *buff, char *str, size_t len);
-void			ft_pad_buffer(t_buffer *buff, char pad, size_t len, int errno);
+void			ftp_get_arg(t_buffer *buff, va_list args, t_format fstring);
+void			ftp_get_str(t_buffer *buff, va_list args, t_format fstring);
+void			ftp_get_int(t_buffer *buff, char *nb, t_format fstring);
+void			ftp_fill_buffer(t_buffer *buff, char *str, size_t len);
+void			ftp_pad_buffer(t_buffer *buff, char pad, size_t len);
+char			*ftp_imaxtoa_base(intmax_t n, int base);
+char			*ftp_uimaxtoa_base(uintmax_t n, int base);
 
 size_t			ft_strlen(const char *s);
 void			ft_strdel(char **ap);
 void			ft_putstr(char const *s);
 void			ft_strnclr(char *s, size_t len);
 void			ft_setlowcase(char *s);
-char			*ft_imaxtoa_base(uintmax_t n, int base);
-char			*ft_uimaxtoa_base(uintmax_t n, int base);
+char			*ft_strchr(const char *s, int c);
+int				ft_strcmp(const char *s1, const char *s2);
 int				ft_atoi(const char *str);
 int				ft_isdigit(int c);
 int				ft_islower(int c);

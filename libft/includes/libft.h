@@ -6,7 +6,7 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 15:07:51 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/14 13:27:54 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/21 22:15:48 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int				ft_toupper(int c);
 int				ft_tolower(int c);
 
 size_t			ft_strlen(const char *s);
+size_t			ft_wstrlen(wchar_t *ws);
+size_t			ft_wcharlen(wchar_t wc);
 size_t			ft_strtablen(char **s);
 size_t			ft_strtablen_at(char **s, int i, int j);
 size_t			ft_strlcat(char *dst, const char *src, size_t size);

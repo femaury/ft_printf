@@ -6,7 +6,7 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/09 14:46:54 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/21 18:06:46 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/21 21:26:48 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void		ftp_get_arg(t_buffer *buff, va_list args, t_format fstr)
 {
 	intmax_t	nb;
 
-	if (TYPE == 'c' || TYPE == 's')
+	if (ft_strchr("sScC", TYPE))
 		ftp_get_str(buff, args, fstr);
 	else if (TYPE == 'i' || TYPE == 'd' || TYPE == 'D')
 	{

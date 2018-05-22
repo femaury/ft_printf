@@ -6,7 +6,7 @@
 #    By: femaury <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/18 20:03:09 by femaury           #+#    #+#              #
-#    Updated: 2018/05/21 22:40:28 by femaury          ###   ########.fr        #
+#    Updated: 2018/05/22 11:46:28 by femaury          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ LIBFT = libft/libft.a
 SRC_PATH = srcs
 SRC_NAME = ft_printf.c ftp_parsing.c ftp_get_arg.c ftp_get_int.c \
 		   ftp_fill_buffer.c ftp_pad_buffer.c ftp_get_str.c ftp_imaxtoa_base.c \
-		   ftp_uimaxtoa_base.c ftp_get_wstr.c
+		   ftp_uimaxtoa_base.c ftp_get_wstr.c ftp_check_wstr.c
 LIB_SRC_PATH = libft
 LIB_SRC_NAME = ft_strlen.c ft_strdel.c ft_putstr.c ft_strnclr.c ft_setlowcase.c \
 			   ft_isdigit.c ft_islower.c ft_strcmp.c ft_atoi.c ft_memalloc.c \

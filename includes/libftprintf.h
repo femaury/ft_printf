@@ -6,7 +6,7 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 12:01:47 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/21 22:38:35 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/22 12:22:58 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct	s_buffer
 	char			str[BUFF_SIZE];
 	unsigned int	len;
 	unsigned int	pos;
+	unsigned int	error: 1;
 }				t_buffer;
 
 typedef enum	e_flags
@@ -73,10 +74,11 @@ void			ftp_fill_buffer(t_buffer *buff, char *str, size_t len);
 void			ftp_pad_buffer(t_buffer *buff, char pad, size_t len);
 char			*ftp_imaxtoa_base(intmax_t n, int base);
 char			*ftp_uimaxtoa_base(uintmax_t n, int base);
+int				ftp_check_wstr(t_buffer *buff, wchar_t *wstr);
 
 size_t			ft_strlen(const char *s);
 size_t			ft_wcharlen(wchar_t wc);
-size_t			ft_wstrlen(wchar_t *ws);
+size_t			ft_wstrlen(wchar_t *ws, int chars);
 void			ft_strdel(char **ap);
 void			ft_putstr(char const *s);
 void			ft_strnclr(char *s, size_t len);

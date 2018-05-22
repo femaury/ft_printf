@@ -6,7 +6,7 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 12:00:35 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/21 16:51:44 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/22 11:24:55 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static void	ft_readformat(char *format, t_buffer *buff, va_list args)
 			pos++;
 			ftp_parsing(format, buff, args, &pos);
 			start = pos;
+			if (buff->error)
+				break ;
 		}
 		else
 			pos++;
@@ -44,11 +46,12 @@ int			ft_printf(const char *restrict format, ...)
 	ft_strnclr(buff.str, BUFF_SIZE);
 	buff.len = 0;
 	buff.pos = 0;
+	buff.error = 0;
 	va_start(args, format);
 	ft_readformat((char *)format, &buff, args);
 	va_end(args);
 	if (buff.pos)
 		write(1, buff.str, buff.pos);
 	buff.len += buff.pos;
-	return (buff.len);
+	return (buff.error ? -1 : buff.len);
 }

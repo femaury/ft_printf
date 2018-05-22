@@ -6,7 +6,7 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 12:01:47 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/22 12:22:58 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/22 12:55:51 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,20 @@
 # define PREC fstr.prec
 # define TYPE fstr.type
 
+# define F_SPACE (1 << 0)
+# define F_HASH (1 << 1)
+# define F_PLUS (1 << 2)
+# define F_MINUS (1 << 3)
+# define F_ZERO (1 << 4)
+
+# define LF_CTOI (1 << 0)
+# define LF_SHTOI (1 << 1)
+# define LF_LONG (1 << 2)
+# define LF_LLONG (1 << 3)
+# define LF_IMAX (1 << 4)
+# define LF_SIZE (1 << 5)
+
+
 typedef struct	s_format
 {
 	unsigned int	flags: 5;
@@ -43,25 +57,6 @@ typedef struct	s_buffer
 	unsigned int	pos;
 	unsigned int	error: 1;
 }				t_buffer;
-
-typedef enum	e_flags
-{
-	F_SPACE = 1 << 0,
-	F_HASH = 1 << 1,
-	F_PLUS = 1 << 2,
-	F_MINUS = 1 << 3,
-	F_ZERO = 1 << 4,
-}				t_flags;
-
-typedef enum	e_lengthflags
-{
-	LF_CTOI = 1 << 0,
-	LF_SHTOI = 1 << 1,
-	LF_LONG = 1 << 2,
-	LF_LLONG = 1 << 3,
-	LF_IMAX = 1 << 4,
-	LF_SIZE = 1 << 5,
-}				t_lflags;
 
 int				ft_printf(const char *restrict format, ...);
 void			ftp_parsing(char *format, t_buffer *buff, va_list args,

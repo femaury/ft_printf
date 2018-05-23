@@ -6,7 +6,7 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/21 20:53:38 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/22 12:29:37 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/23 12:22:52 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void		ft_get_wc(t_buffer *buff, size_t bytes, wchar_t wc)
 {
 	static char	str[4];
-	
+
 	if (bytes == 1)
 		str[0] = wc;
 	else
@@ -58,14 +58,16 @@ static void		ft_format_wc(t_buffer *buff, wchar_t wc, size_t bytes,
 		ft_get_wc(buff, bytes, wc);
 }
 
-static void		ft_get_ws(t_buffer *buff, wchar_t *ws, size_t strlen)
+static void		ft_get_ws(t_buffer *buff, wchar_t *ws, int strlen)
 {
-	size_t	clen;
+	int	clen;
 
 	clen = 0;
 	while (*ws && (strlen -= clen) > 0)
 	{
 		clen = ft_wcharlen(*ws);
+		if (strlen - clen < 0)
+			clen += (strlen - clen);
 		ft_get_wc(buff, clen, *ws++);
 	}
 }
@@ -73,32 +75,24 @@ static void		ft_get_ws(t_buffer *buff, wchar_t *ws, size_t strlen)
 static void		ft_format_ws(t_buffer *buff, wchar_t *ws, size_t strlen,
 		t_format fstr)
 {
-	unsigned int	chars;
-
-	chars = 0;
-	while (ws[chars])
-		chars++;
-	if (ftp_check_wstr(buff, ws))
+	if (!ftp_check_wstr(buff, ws))
+		return ;
+	strlen = (fstr.hasprec && PREC < strlen ? PREC : strlen);
+	if (WIDTH > strlen)
 	{
-		if (WIDTH > chars || PREC > chars)
+		if (FLAGS & F_MINUS)
 		{
-			if (FLAGS & F_MINUS)
-			{
-				ft_get_ws(buff, ws, strlen);
-				ftp_pad_buffer(buff, ' ', WIDTH - chars);
-			}
-			else
-			{
-				if (PREC < WIDTH)
-					ftp_pad_buffer(buff, ' ', WIDTH - PREC);
-				else if (WIDTH > chars)
-					ftp_pad_buffer(buff, ' ', WIDTH - chars);
-				ft_get_ws(buff, ws, strlen);
-			}
+			ft_get_ws(buff, ws, strlen);
+			ftp_pad_buffer(buff, ' ', WIDTH - strlen);
 		}
 		else
+		{
+			ftp_pad_buffer(buff, ' ', WIDTH - strlen);
 			ft_get_ws(buff, ws, strlen);
+		}
 	}
+	else
+		ft_get_ws(buff, ws, strlen);
 }
 
 void			ftp_get_wstr(t_buffer *buff, va_list args, t_format fstr)
@@ -119,6 +113,6 @@ void			ftp_get_wstr(t_buffer *buff, va_list args, t_format fstr)
 		if (!(ws = va_arg(args, wchar_t *)))
 			ftp_fill_buffer(buff, "(null)", 6);
 		else if (!(fstr.hasprec && !PREC && !WIDTH))
-			ft_format_ws(buff, ws, ft_wstrlen(ws, -1), fstr);
+			ft_format_ws(buff, ws, ft_wstrlen(ws), fstr);
 	}
 }

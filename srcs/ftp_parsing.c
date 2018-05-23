@@ -6,7 +6,7 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/20 18:12:12 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/22 12:56:39 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/23 09:36:33 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,9 @@ void		ftp_parsing(char *format, t_buffer *buff, va_list args, int *pos)
 		ft_parsing_flags(format, &fstr, pos);
 		ft_parsing_digits(format, &fstr, pos);
 		ft_parsing_lenflags(format, &fstr, pos);
-		if (ft_strchr("sSpdDioOuUxXcC%", format[*pos]))
+		if (!format[*pos])
+			return ;
+		if (ft_strhasc("sSpdDioOuUxXcCb%", format[*pos]))
 		{
 			fstr.type = format[*pos];
 			*pos += 1;

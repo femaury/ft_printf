@@ -6,7 +6,7 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 17:41:19 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/22 10:55:45 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/23 11:52:48 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void		ftp_get_str(t_buffer *buff, va_list args, t_format fstr)
 		else
 			ft_get_s(buff, str, fstr);
 	}
-	else if (TYPE == 'C' || TYPE == 'S' || (ft_strchr("cs", TYPE) && (LFLAGS & LF_LONG)))
+	else if (TYPE == 'C' || TYPE == 'S' ||
+			(ft_strhasc("cs", TYPE) && (LFLAGS & LF_LONG)))
 		ftp_get_wstr(buff, args, fstr);
 }

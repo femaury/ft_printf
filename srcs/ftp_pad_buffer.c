@@ -6,7 +6,7 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/12 17:45:30 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/22 11:17:56 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/22 15:32:54 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void		ftp_pad_buffer(t_buffer *buff, char pad, size_t len)
 	unsigned int	i;
 
 	i = 0;
+	if ((int)len < 0)
+		return ;
 	while (i < len)
 	{
 		if (buff->pos == BUFF_SIZE)

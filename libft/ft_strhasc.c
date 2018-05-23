@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ftp_check_wstr.c                                   :+:      :+:    :+:   */
+/*   ft_strhasc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/22 11:43:35 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/23 12:22:37 by femaury          ###   ########.fr       */
+/*   Created: 2018/04/18 17:09:33 by femaury           #+#    #+#             */
+/*   Updated: 2018/05/22 17:04:15 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "libft.h"
 
-int		ftp_check_wstr(t_buffer *buff, wchar_t *wstr)
+int		ft_strhasc(const char *s, int c)
 {
-	while (*wstr != L'\0')
-	{
-		if (*wstr > 0x10FFFF || (*wstr >= 0xD800 && *wstr <= 0xDFFF))
-		{
-			buff->error |= 1;
-			return (0);
-		}
-		wstr++;
-	}
-	return (1);
+	unsigned int	i;
+	char			ch;
+
+	i = 0;
+	ch = (char)c;
+	while (s[i] && s[i] != ch)
+		i++;
+	if (s[i] == ch)
+		return (1);
+	return (0);
 }

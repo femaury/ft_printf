@@ -6,7 +6,7 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 15:07:51 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/22 12:21:27 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/23 11:40:02 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int				ft_toupper(int c);
 int				ft_tolower(int c);
 
 size_t			ft_strlen(const char *s);
-size_t			ft_wstrlen(wchar_t *ws, int chars);
+size_t			ft_wstrlen(wchar_t *ws);
 size_t			ft_wcharlen(wchar_t wc);
 size_t			ft_strtablen(char **s);
 size_t			ft_strtablen_at(char **s, int i, int j);
@@ -66,6 +66,7 @@ char			*ft_strcat(char *s1, const char *s2);
 char			*ft_strncat(char *s1, const char *s2, size_t n);
 char			*ft_strchr(const char *s, int c);
 char			*ft_strrchr(const char *s, int c);
+int				ft_strhasc(const char *s, int c);
 char			*ft_strstr(const char *haystack, const char *needle);
 char			*ft_strnstr(const char *haystack, const char *needle,
 		size_t len);

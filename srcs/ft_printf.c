@@ -6,7 +6,7 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 12:00:35 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/22 11:24:55 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/23 11:25:47 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,20 @@ static void	ft_readformat(char *format, t_buffer *buff, va_list args)
 
 	pos = 0;
 	start = 0;
-	while (format[pos])
+	while (format[pos] && !buff->error)
 	{
-		if (format[pos] == '%')
+		if (format[pos] == '%' || format[pos] == '{')
 		{
 			ftp_fill_buffer(buff, format + start, pos - start +
-					(format[pos + 1] == '%' ? 1 : 0));
-			pos++;
-			ftp_parsing(format, buff, args, &pos);
-			start = pos;
-			if (buff->error)
-				break ;
+					(format[pos] == '%' && format[pos + 1] == '%' ? 1 : 0));
+			if (format[pos] == '{')
+				ftp_colors(format, buff, &pos, &start);
+			else
+			{
+				pos++;
+				ftp_parsing(format, buff, args, &pos);
+				start = pos;
+			}
 		}
 		else
 			pos++;

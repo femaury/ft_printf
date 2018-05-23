@@ -6,7 +6,7 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 14:20:21 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/21 22:48:28 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/23 09:30:21 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	ft_prepend(t_buffer *buff, char *nb, size_t len, t_format fstr)
 			else if (TYPE == 'p')
 				ftp_fill_buffer(buff, "0x", 2);
 		}
-		else if (!(fstr.hasprec && PREC <= len) && !ft_strchr("oOxX", TYPE))
+		else if (!(fstr.hasprec && PREC <= len) && !ft_strhasc("oOxX", TYPE))
 			ftp_pad_buffer(buff, ((FLAGS & F_PLUS) ? '+' : ' '), 1);
 		else if (TYPE == 'i' || TYPE == 'd' || TYPE == 'D')
 			ftp_pad_buffer(buff, ((FLAGS & F_PLUS) ? '+' : ' '), 1);
@@ -72,7 +72,7 @@ static void	ft_extend2(t_buffer *buff, char *nb, size_t len, t_format fstr)
 			ftp_pad_buffer(buff, ' ',
 					WIDTH - (PREC > len ? PREC : len) - extra);
 		ft_prepend(buff, nb, len, fstr);
-		if (fstr.hasprec && extra && ft_strchr("oO", TYPE))
+		if (fstr.hasprec && extra && ft_strhasc("oO", TYPE))
 			ftp_pad_buffer(buff, '0',
 					PREC - (PREC > len + extra ? len + extra : PREC));
 		else if (fstr.hasprec)

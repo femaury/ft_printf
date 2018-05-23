@@ -6,18 +6,18 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/30 12:01:47 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/22 12:55:51 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/23 11:39:04 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFTPRINTF_H
 # define LIBFTPRINTF_H
 
+# include <stdio.h>
+
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdarg.h>
-
-# include <stdio.h>
 
 # define BUFF_SIZE 32
 # define FLAGS fstr.flags
@@ -38,7 +38,6 @@
 # define LF_LLONG (1 << 3)
 # define LF_IMAX (1 << 4)
 # define LF_SIZE (1 << 5)
-
 
 typedef struct	s_format
 {
@@ -67,18 +66,20 @@ void			ftp_get_wstr(t_buffer *buff, va_list args, t_format fstr);
 void			ftp_get_int(t_buffer *buff, char *nb, t_format fstr);
 void			ftp_fill_buffer(t_buffer *buff, char *str, size_t len);
 void			ftp_pad_buffer(t_buffer *buff, char pad, size_t len);
+void			ftp_colors(char *format, t_buffer *buff, int *pos, int *start);
 char			*ftp_imaxtoa_base(intmax_t n, int base);
 char			*ftp_uimaxtoa_base(uintmax_t n, int base);
 int				ftp_check_wstr(t_buffer *buff, wchar_t *wstr);
 
 size_t			ft_strlen(const char *s);
 size_t			ft_wcharlen(wchar_t wc);
-size_t			ft_wstrlen(wchar_t *ws, int chars);
+size_t			ft_wstrlen(wchar_t *ws);
 void			ft_strdel(char **ap);
 void			ft_putstr(char const *s);
 void			ft_strnclr(char *s, size_t len);
 void			ft_setlowcase(char *s);
-char			*ft_strchr(const char *s, int c);
+int				ft_strnequ(char const *s1, char const *s2, size_t n);
+int				ft_strhasc(const char *s, int c);
 int				ft_strcmp(const char *s1, const char *s2);
 int				ft_atoi(const char *str);
 int				ft_isdigit(int c);

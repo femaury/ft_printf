@@ -6,7 +6,7 @@
 /*   By: femaury <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/09 14:46:54 by femaury           #+#    #+#             */
-/*   Updated: 2018/05/21 21:26:48 by femaury          ###   ########.fr       */
+/*   Updated: 2018/05/23 09:30:09 by femaury          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static int	ft_set_base(t_format fstr)
 {
+	if (TYPE == 'b')
+		return (2);
 	if (TYPE == 'x' || TYPE == 'X' || TYPE == 'p')
 		return (16);
 	if (TYPE == 'o' || TYPE == 'O')
@@ -43,7 +45,7 @@ static void	ft_get_unsigned(t_buffer *buff, va_list args, t_format fstr)
 			nb = (uintmax_t)(va_arg(args, void *));
 		else
 			nb = (uintmax_t)(va_arg(args, unsigned int));
-		if (fstr.hasprec && PREC == 0 && ft_strchr("uUxXoOp", TYPE) && nb == 0)
+		if (fstr.hasprec && PREC == 0 && ft_strhasc("uUxXoOp", TYPE) && nb == 0)
 			ftp_get_int(buff, "", fstr);
 		else
 			ftp_get_int(buff, ftp_uimaxtoa_base(nb, ft_set_base(fstr)), fstr);
@@ -54,7 +56,7 @@ void		ftp_get_arg(t_buffer *buff, va_list args, t_format fstr)
 {
 	intmax_t	nb;
 
-	if (ft_strchr("sScC", TYPE))
+	if (ft_strhasc("sScC", TYPE))
 		ftp_get_str(buff, args, fstr);
 	else if (TYPE == 'i' || TYPE == 'd' || TYPE == 'D')
 	{
@@ -74,6 +76,6 @@ void		ftp_get_arg(t_buffer *buff, va_list args, t_format fstr)
 		else
 			ftp_get_int(buff, ftp_imaxtoa_base(nb, 10), fstr);
 	}
-	else if (ft_strchr("uUoOxXp%", TYPE))
+	else if (ft_strhasc("uUoOxXpb%", TYPE))
 		ft_get_unsigned(buff, args, fstr);
 }
